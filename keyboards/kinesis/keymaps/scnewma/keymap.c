@@ -12,7 +12,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            MO(_SHIFTED), KC_QUOT ,KC_Q    ,KC_J    ,KC_K    ,KC_X   ,
                    KC_PIPE ,KC_BSLS ,KC_LEFT ,KC_RGHT,
 			   KC_LGUI,KC_LALT,
-                                    KC_HOME,
+                                    KC_HYPR,
                            KC_BSPC,KC_LCTRL , _______,
     KC_F9  ,KC_F10  ,KC_F11  ,KC_F12  ,KC_PSCR ,KC_SLCK     ,KC_PAUS, KC_FN0, KC_1,
 	KC_EQL ,KC_RPRN ,KC_RCBR ,KC_RBRC ,KC_ASTR ,KC_EXLM     ,
