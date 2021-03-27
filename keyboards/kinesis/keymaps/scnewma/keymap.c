@@ -4,6 +4,17 @@
 #define _SHIFTED 1
 #define _COMMANDS 2
 
+//  TODO: 
+//    CLIPSC and PRNTSC might be better combined onto one key using tap dance.
+//    PRNTSC would be the tap command and CLIPSC would be the hold command.
+#define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
+#define PRNTSC G(S(KC_4))           // Cmd-Shift-4 -> macOS Screenshot
+#define OPTBS  A(KC_BSPC)           // macOS backspace one word
+
+enum custom_keycodes {
+    TMX_PRVW = SAFE_RANGE,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT(
         KC_ESC,       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
@@ -15,7 +26,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         /* thumb cluster */
 			           KC_LGUI,  KC_LALT,
                                  KC_HYPR,
-              KC_BSPC, KC_LCTRL, _______,
+              KC_BSPC, KC_LCTRL, OSL(_COMMANDS),
 
         KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,      KC_PAUS, KC_FN0, KC_1,
         KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
@@ -51,6 +62,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                        S(KC_RCTL),  S(KC_RGUI),
                                     _______,
               _______, S(KC_ENTER), S(KC_SPC)
+),
+
+[_COMMANDS] = LAYOUT(
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, CLIPSC, PRNTSC,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,
+               KC_NO, KC_NO, KC_NO, KC_NO,
+                        /* thumb cluster */
+                         KC_NO, KC_NO,
+                                KC_NO,
+                  KC_NO, KC_NO, KC_NO,
+
+        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO,
+        OPTBS, KC_NO, TMX_PRVW, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO,
+               KC_NO, KC_NO,    KC_NO, KC_NO,
+                        /* thumb cluster */
+                       KC_NO, KC_NO,
+                              KC_NO,
+                KC_NO, KC_NO, KC_NO
 )
 };
 
@@ -63,7 +98,16 @@ void matrix_scan_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  return true;
+    switch (keycode) {
+    case TMX_PRVW:
+        if (record->event.pressed) {
+            // send tmux leader twice, which i use to switch to previous window
+            tap_code16(C(KC_SPC));
+            tap_code16(C(KC_SPC));
+        }
+        break;
+    }
+    return true;
 }
 
 void led_set_user(uint8_t usb_led) {
