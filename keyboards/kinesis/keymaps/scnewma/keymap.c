@@ -6,6 +6,7 @@
 #define _CSFT 3
 #define _QWERTY 4
 #define _COMMANDS 5
+#define _KEYPAD 6
 
 //  TODO: 
 //    CLIPSC and PRNTSC might be better combined onto one key using tap dance.
@@ -27,9 +28,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MO(_SHIFTED), KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,
                       KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
-			            KC_LGUI, OSL(_COMMANDS),
-                                 KC_HYPR,
-               KC_BSPC, _______, KC_LCTL,
+			            KC_LGUI,     OSL(_COMMANDS),
+                                     KC_HYPR,
+               KC_BSPC, MO(_KEYPAD), KC_LCTL,
 
         KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,      DF(_BASE), DF(_CBASE), DF(_QWERTY),
         KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
@@ -168,6 +169,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                        KC_NO, KC_NO,
                               KC_NO,
                 KC_NO, KC_NO, KC_NO
+),
+
+[_KEYPAD] = LAYOUT (
+        _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,
+                 _______, _______,  _______, _______,
+                        /* thumb cluster */
+                        _______, _______,
+                                 _______,
+               _______, _______, _______,
+
+           // Right Hand
+        _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, KC_PEQL, KC_PSLS, KC_PAST, _______,
+        _______, KC_P7,   KC_P8,   KC_P9,   KC_PMNS, _______,
+        _______, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, _______,
+        _______, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______,
+                 _______, _______, KC_PDOT, KC_PENT,
+                        /* thumb cluster */
+                        _______, _______,
+                                 _______,
+               _______, _______, KC_P0
 )
 };
 
