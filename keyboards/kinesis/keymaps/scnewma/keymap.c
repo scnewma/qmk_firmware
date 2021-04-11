@@ -8,11 +8,15 @@
 #define _COMMANDS 5
 #define _KEYPAD 6
 
-//  TODO: 
+//  TODO:
 //    CLIPSC and PRNTSC might be better combined onto one key using tap dance.
 //    PRNTSC would be the tap command and CLIPSC would be the hold command.
 #define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
 #define PRNTSC G(S(KC_4))           // Cmd-Shift-4 -> macOS Screenshot
+
+// home row mods dvorak
+#define DSFT_E MT(MOD_LSFT, KC_E)
+#define DSFT_T MT(MOD_RSFT, KC_T)
 
 enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
@@ -21,22 +25,22 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Real Programmer's Dvorak
 [_BASE] = LAYOUT(
-        KC_ESC,       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        KC_DLR,       KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
-        KC_TAB,       KC_SCLN, KC_COMM, KC_DOT,  KC_P,    KC_Y,
-        KC_ESC,       KC_A,    KC_O,    KC_E,    KC_U,    KC_I,
-        MO(_SHIFTED), KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,
-                      KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
+        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
+        KC_DLR,  KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
+        KC_TAB,  KC_SCLN, KC_COMM, KC_DOT,  KC_P,    KC_Y,
+        KC_ESC,  KC_A,    KC_O,    DSFT_E,  KC_U,    KC_I,
+        KC_LSFT, KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,
+                 KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
-			            KC_LGUI,     OSL(_COMMANDS),
+                        KC_LGUI,     OSL(_COMMANDS),
                                      KC_HYPR,
                KC_BSPC, MO(_KEYPAD), KC_LCTL,
 
-        KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,      DF(_BASE), DF(_CBASE), DF(_QWERTY),
+        KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
         KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
         KC_F,   KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
-        KC_D,   KC_H,    KC_T,    KC_N,    KC_S,    KC_MINUS,
-        KC_B,   KC_M,    KC_W,    KC_V,    KC_Z,    MO(_SHIFTED),
+        KC_D,   KC_H,    DSFT_T,   KC_N,    KC_S,   KC_MINUS,
+        KC_B,   KC_M,    KC_W,    KC_V,    KC_Z,    KC_RSFT,
                 KC_UP,  KC_DOWN, KC_AT,   _______,
                         /* thumb cluster */
                         KC_LALT,  KC_RGUI,
@@ -44,80 +48,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                _______, KC_ENTER, KC_SPC
 ),
 
-// Shift Layer for Real Programmer's Dvorak
-[_SHIFTED] = LAYOUT(
-        KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO,
-        KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
-        S(KC_TAB), KC_COLN, KC_LABK, KC_RABK, S(KC_P), S(KC_Y),
-        KC_TILD,   S(KC_A), S(KC_O), S(KC_E), S(KC_U), S(KC_I),
-        KC_TRNS,   KC_DQUO, S(KC_Q), S(KC_J), S(KC_K), S(KC_X),
-                   KC_PIPE ,KC_HASH ,KC_TRNS ,KC_TRNS,
-                        /* thumb cluster */
-			            S(KC_LGUI), _______,
-                                    KC_HYPR,
-            S(KC_BSPC), _______,    S(KC_LCTL),
-
-        KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO,
-        KC_6,      KC_7,    KC_8,    KC_9,    KC_0,    KC_PERC,
-        S(KC_F),   S(KC_G), S(KC_C), S(KC_R), S(KC_L), KC_QUES,
-        S(KC_D),   S(KC_H), S(KC_T), S(KC_N), S(KC_S), KC_UNDS,
-        S(KC_B),   S(KC_M), S(KC_W), S(KC_V), S(KC_Z), KC_TRNS,
-                   KC_UP,   KC_DOWN, KC_CIRC, KC_NO,
-                        /* thumb cluster */
-                        S(KC_LALT),  S(KC_RGUI),
-                                     _______,
-               _______, S(KC_ENTER), S(KC_SPC)
-),
-
 // Real Programmer's Colemak DHm
 // Adds the symbol/number layout of RPD to Colemak DHm
 [_CBASE] = LAYOUT(
-        KC_ESC,    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        KC_DLR,    KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
-        KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,
-        KC_ESC,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,
-        MO(_CSFT), KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,
+        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
+        KC_DLR,  KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
+        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,
+        KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,
                    KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
-			            KC_LGUI, OSL(_COMMANDS),
+                        KC_LGUI, OSL(_COMMANDS),
                                  KC_HYPR,
                KC_BSPC, _______, KC_LCTL,
 
-        KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,   DF(_BASE), DF(_CBASE), DF(_QWERTY),
+        KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
         KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
         KC_J,   KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINUS,
         KC_M,   KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-        KC_K,   KC_H,    KC_COMM, KC_DOT,  KC_SLSH, MO(_CSFT),
+        KC_K,   KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
                 KC_UP,   KC_DOWN, KC_AT,   _______,
                         /* thumb cluster */
                        KC_LALT,  KC_RGUI,
                                  _______,
               _______, KC_ENTER, KC_SPC
-),
-
-// Shift Layer for Real Programmer's Colemak DHm
-[_CSFT] = LAYOUT(
-        KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO,
-        KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
-        S(KC_TAB), S(KC_Q), S(KC_W), S(KC_F), S(KC_P), S(KC_B),
-        KC_TILD,   S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G),
-        KC_TRNS,   S(KC_Z), S(KC_X), S(KC_C), S(KC_D), S(KC_V),
-                   KC_PIPE ,KC_HASH ,KC_TRNS ,KC_TRNS,
-                        /* thumb cluster */
-			            S(KC_LGUI), _______,
-                                    KC_HYPR,
-            S(KC_BSPC), _______,    S(KC_LCTL),
-
-        KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO,
-        KC_6,      KC_7,    KC_8,    KC_9,    KC_0,    KC_PERC,
-        S(KC_J),   S(KC_L), S(KC_U), S(KC_Y), KC_COLN, KC_UNDS,
-        S(KC_M),   S(KC_N), S(KC_E), S(KC_I), S(KC_O), KC_DQUO,
-        S(KC_K),   S(KC_H), KC_LABK, KC_RABK, KC_QUES, KC_TRNS,
-                   KC_UP,   KC_DOWN, KC_CIRC, KC_NO,
-                        /* thumb cluster */
-                       S(KC_LALT),  S(KC_RGUI),
-                                    _______,
-              _______, S(KC_ENTER), S(KC_SPC)
 ),
 
 // A qwerty layout that I use for gaming.
@@ -205,6 +159,36 @@ void matrix_scan_user(void) {
 
 }
 
+void register_unshifted_kc(uint16_t keycode, bool lsft_pressed, bool rsft_pressed) {
+    // we need to unregister any registered shift presses since the kc that we
+    // are registering should be unshifted
+    unregister_code(KC_LSHIFT);
+    unregister_code(KC_RSHIFT);
+
+    // register the actual keycode
+    tap_code16(keycode);
+
+    // re-register any shift keys that were registered
+    if (lsft_pressed) {
+        register_code(KC_LSHIFT);
+    }
+    if (rsft_pressed) {
+        register_code(KC_RSHIFT);
+    }
+}
+
+// process_record_user_shifted_keycode processes keycode if shift is not pressed and processes
+// shifted_keycode if shift is pressed
+bool process_record_user_shifted_keycode(uint16_t keycode, uint16_t shifted_keycode, keyrecord_t *record) {
+    bool lsft_pressed = get_mods() & MOD_BIT(KC_LSFT);
+    bool rsft_pressed = get_mods() & MOD_BIT(KC_RSFT);
+    if (record->event.pressed && (lsft_pressed || rsft_pressed)) {
+        register_unshifted_kc(shifted_keycode, lsft_pressed, rsft_pressed);
+        return false;
+    }
+    return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case TMX_PRVW:
@@ -214,6 +198,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code16(C(KC_SPC));
         }
         break;
+
+    // handle my non-default shifted keycodes
+    case KC_DLR:
+        return process_record_user_shifted_keycode(keycode, KC_GRV, record);
+    case KC_PLUS:
+        return process_record_user_shifted_keycode(keycode, KC_1, record);
+    case KC_LBRC:
+        return process_record_user_shifted_keycode(keycode, KC_2, record);
+    case KC_LCBR:
+        return process_record_user_shifted_keycode(keycode, KC_3, record);
+    case KC_LPRN:
+        return process_record_user_shifted_keycode(keycode, KC_4, record);
+    case KC_AMPR:
+        return process_record_user_shifted_keycode(keycode, KC_5, record);
+    case KC_EQL:
+        return process_record_user_shifted_keycode(keycode, KC_6, record);
+    case KC_RPRN:
+        return process_record_user_shifted_keycode(keycode, KC_7, record);
+    case KC_RCBR:
+        return process_record_user_shifted_keycode(keycode, KC_8, record);
+    case KC_RBRC:
+        return process_record_user_shifted_keycode(keycode, KC_9, record);
+    case KC_ASTR:
+        return process_record_user_shifted_keycode(keycode, KC_0, record);
+    case KC_EXLM:
+        return process_record_user_shifted_keycode(keycode, KC_PERC, record);
+    case KC_BSLS:
+        return process_record_user_shifted_keycode(keycode, KC_HASH, record);
+    case KC_AT:
+        return process_record_user_shifted_keycode(keycode, KC_CIRC, record);
+    case KC_ESC:
+        return process_record_user_shifted_keycode(keycode, KC_TILD, record);
     }
     return true;
 }
