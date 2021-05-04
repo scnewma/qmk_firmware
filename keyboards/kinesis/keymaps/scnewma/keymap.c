@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 
-#define _BASE 0 
+#define _BASE 0
 #define _SHIFTED 1
 #define _CBASE 2
 #define _CSFT 3
@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_DLR,  KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
         KC_TAB,  KC_SCLN, KC_COMM, KC_DOT,  KC_P,    KC_Y,
         KC_ESC,  KC_A,    KC_O,    DSFT_E,  KC_U,    KC_I,
-        KC_LSFT, KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,
+        _______, KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,
                  KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
                         KC_LGUI,     OSL(_COMMANDS),
@@ -40,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
         KC_F,   KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
         KC_D,   KC_H,    DSFT_T,   KC_N,    KC_S,   KC_MINUS,
-        KC_B,   KC_M,    KC_W,    KC_V,    KC_Z,    KC_RSFT,
+        KC_B,   KC_M,    KC_W,    KC_V,    KC_Z,    _______,
                 KC_UP,  KC_DOWN, KC_AT,   _______,
                         /* thumb cluster */
                         KC_LALT,  KC_RGUI,
@@ -48,14 +48,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                _______, KC_ENTER, KC_SPC
 ),
 
-// Real Programmer's Colemak DHm
-// Adds the symbol/number layout of RPD to Colemak DHm
+// Real Programmer's Colemak
+// Adds the symbol/number layout of RPD to Colemak
 [_CBASE] = LAYOUT(
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
         KC_DLR,  KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
-        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,
-        KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,
+        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,
+        KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,
                    KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
                         KC_LGUI, OSL(_COMMANDS),
@@ -65,8 +65,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
         KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
         KC_J,   KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINUS,
-        KC_M,   KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-        KC_K,   KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+        KC_H,   KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+        KC_K,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
                 KC_UP,   KC_DOWN, KC_AT,   _______,
                         /* thumb cluster */
                        KC_LALT,  KC_RGUI,
