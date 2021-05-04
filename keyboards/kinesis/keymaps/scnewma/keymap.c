@@ -14,10 +14,6 @@
 #define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
 #define PRNTSC G(S(KC_4))           // Cmd-Shift-4 -> macOS Screenshot
 
-// home row mods dvorak
-#define DSFT_E MT(MOD_LSFT, KC_E)
-#define DSFT_T MT(MOD_RSFT, KC_T)
-
 enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
 };
@@ -28,18 +24,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
         KC_DLR,  KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
         KC_TAB,  KC_SCLN, KC_COMM, KC_DOT,  KC_P,    KC_Y,
-        KC_ESC,  KC_A,    KC_O,    DSFT_E,  KC_U,    KC_I,
+        KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,
         _______, KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,
                  KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
                         KC_LGUI,     OSL(_COMMANDS),
                                      KC_HYPR,
-               KC_BSPC, MO(_KEYPAD), KC_LCTL,
+               KC_BSPC, KC_LSFT, KC_LCTL,
 
         KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
         KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
         KC_F,   KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
-        KC_D,   KC_H,    DSFT_T,   KC_N,    KC_S,   KC_MINUS,
+        KC_D,   KC_H,    KC_T,    KC_N,    KC_S,   KC_MINUS,
         KC_B,   KC_M,    KC_W,    KC_V,    KC_Z,    _______,
                 KC_UP,  KC_DOWN, KC_AT,   _______,
                         /* thumb cluster */
