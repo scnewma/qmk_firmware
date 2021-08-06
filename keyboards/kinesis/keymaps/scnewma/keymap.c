@@ -19,36 +19,33 @@ enum custom_keycodes {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-// Real Programmer's Dvorak
 [_BASE] = LAYOUT(
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        KC_DLR,  KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
-        KC_TAB,  KC_SCLN, KC_COMM, KC_DOT,  KC_P,    KC_Y,
+        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
+        KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,
         KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,
-        _______, KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,
-                 KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
+        _______, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,
+                 _______, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
                         KC_LGUI,     OSL(_COMMANDS),
                                      KC_HYPR,
                KC_BSPC, KC_LSFT, KC_LCTL,
 
-        KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
-        KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
-        KC_F,   KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
-        KC_D,   KC_H,    KC_T,    KC_N,    KC_S,   KC_MINUS,
-        KC_B,   KC_M,    KC_W,    KC_V,    KC_Z,    _______,
-                KC_UP,  KC_DOWN, KC_AT,   _______,
+        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
+        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
+        KC_F,  KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
+        KC_D,  KC_H,    KC_T,    KC_N,    KC_S,    KC_MINUS,
+        KC_B,  KC_M,    KC_W,    KC_V,    KC_Z,    _______,
+               KC_UP,  KC_DOWN,  KC_LBRC, KC_RBRC,
                         /* thumb cluster */
                         KC_LALT,  KC_RGUI,
                                   _______,
                _______, KC_ENTER, KC_SPC
 ),
 
-// Real Programmer's Colemak
-// Adds the symbol/number layout of RPD to Colemak
 [_CBASE] = LAYOUT(
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        KC_DLR,  KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR,
+        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,
         KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,
@@ -59,11 +56,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                KC_BSPC, _______, KC_LCTL,
 
         KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
-        KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, KC_EXLM,
-        KC_J,   KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINUS,
-        KC_H,   KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-        KC_K,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                KC_UP,   KC_DOWN, KC_AT,   _______,
+        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
+        KC_J,  KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINUS,
+        KC_H,  KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+        KC_K,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+               KC_UP,   KC_DOWN, KC_AT,   _______,
                         /* thumb cluster */
                        KC_LALT,  KC_RGUI,
                                  _______,
@@ -196,36 +193,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     // handle my non-default shifted keycodes
-    case KC_DLR:
-        return process_record_user_shifted_keycode(keycode, KC_GRV, record);
-    case KC_PLUS:
-        return process_record_user_shifted_keycode(keycode, KC_1, record);
-    case KC_LBRC:
-        return process_record_user_shifted_keycode(keycode, KC_2, record);
-    case KC_LCBR:
-        return process_record_user_shifted_keycode(keycode, KC_3, record);
-    case KC_LPRN:
-        return process_record_user_shifted_keycode(keycode, KC_4, record);
-    case KC_AMPR:
-        return process_record_user_shifted_keycode(keycode, KC_5, record);
-    case KC_EQL:
-        return process_record_user_shifted_keycode(keycode, KC_6, record);
-    case KC_RPRN:
-        return process_record_user_shifted_keycode(keycode, KC_7, record);
-    case KC_RCBR:
-        return process_record_user_shifted_keycode(keycode, KC_8, record);
-    case KC_RBRC:
-        return process_record_user_shifted_keycode(keycode, KC_9, record);
-    case KC_ASTR:
-        return process_record_user_shifted_keycode(keycode, KC_0, record);
-    case KC_EXLM:
-        return process_record_user_shifted_keycode(keycode, KC_PERC, record);
-    case KC_BSLS:
-        return process_record_user_shifted_keycode(keycode, KC_HASH, record);
-    case KC_AT:
-        return process_record_user_shifted_keycode(keycode, KC_CIRC, record);
-    case KC_ESC:
-        return process_record_user_shifted_keycode(keycode, KC_TILD, record);
+    /* case KC_DLR: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_GRV, record); */
+    /* case KC_PLUS: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_1, record); */
+    /* case KC_LBRC: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_2, record); */
+    /* case KC_LCBR: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_3, record); */
+    /* case KC_LPRN: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_4, record); */
+    /* case KC_AMPR: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_5, record); */
+    /* case KC_EQL: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_6, record); */
+    /* case KC_RPRN: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_7, record); */
+    /* case KC_RCBR: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_8, record); */
+    /* case KC_RBRC: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_9, record); */
+    /* case KC_ASTR: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_0, record); */
+    /* case KC_EXLM: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_PERC, record); */
+    /* case KC_BSLS: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_HASH, record); */
+    /* case KC_AT: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_CIRC, record); */
+    /* case KC_ESC: */
+    /*     return process_record_user_shifted_keycode(keycode, KC_TILD, record); */
     }
     return true;
 }
