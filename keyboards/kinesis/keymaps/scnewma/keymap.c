@@ -1,21 +1,6 @@
 #include QMK_KEYBOARD_H
 
-#define _BASE 0
-#define _BASE2 1
-#define _CBASE 2
-#define _QWERTY 3
-#define _RGX 4
-#define _SYM 5
-#define _COMMANDS 6
-#define _KEYPAD 7
-#define _SYM2 9
-
-//  TODO:
-//    CLIPSC and PRNTSC might be better combined onto one key using tap dance.
-//    PRNTSC would be the tap command and CLIPSC would be the hold command.
-#define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
-#define PRNTSC G(S(KC_4))           // Cmd-Shift-4 -> macOS Screenshot
-#define _CESC CTL_T(KC_ESC)        // control when held, escape when tapped
+#include "keycodes.h"
 
 #define UPPER 1
 #define STATE qk_tap_dance_state_t *state
@@ -29,11 +14,6 @@
                            else if (u) { SHIFT(k); } \
                            else { register_code(k); } \
                            reset_tap_dance(state)
-
-enum custom_keycodes {
-    TMX_PRVW = SAFE_RANGE,
-    L_NUM,
-};
 
 void greater(STATE, void *user_data) {
     DANCE_TAP(" -> ", UPPER, KC_DOT);
@@ -76,12 +56,43 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset),
 };
 
+#define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
+#define LAYOUT_kinesis_base( \
+        K01, K02, K03, K04, K05, K06,                    K07, K08, K09, K10, K11, K12, \
+        K13, K14, K15, K16, K17, K18,                    K19, K20, K21, K22, K23, K24, \
+        K25, K26, K27, K28, K29, K30,                    K31, K32, K33, K34, K35, K36, \
+                                   K37, K38,      K39, K40, \
+                                        K41,      K42, \
+                              K43, K44, K45,      K46, K47, K48 \
+    ) \
+    LAYOUT_wrapper( \
+        KC_ESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_F6, KC_F7, KC_F8, \
+        KC_GRV, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+        K01,    K02,     K03,     K04,     K05,     K06, \
+        K13,    K14,     K15,     K16,     K17,     K18, \
+        K25,    K26,     K27,     K28,     K29,     K30, \
+                KC_TRNS, KC_TRNS, KC_LEFT, KC_RGHT, \
+                                                       K37, K38, \
+                                                            K41, \
+                                                  K43, K44, K45, \
+        KC_F9, KC_F10, KC_F11,   KC_F12,  KC_PSCR, KC_SLCK, DF(_BASE), DF(_CBASE), DF(_QWERTY), \
+        KC_NO, KC_NO,  KC_NO,    KC_NO,   KC_NO,   KC_NO, \
+        K07,   K08,    K09,      K10,     K11,     K12, \
+        K19,   K20,    K21,      K22,     K23,     K24, \
+        K31,   K32,    K33,      K34,     K35,     K36, \
+               KC_UP,  KC_DOWN,  KC_TRNS, KC_TRNS, \
+                                                      K39, K40, \
+                                                           K42, \
+                                                 K46, K47, K48 \
+    )
+#define LAYOUT_kinesis_base_wrapper(...) LAYOUT_kinesis_base(__VA_ARGS__)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT(
-        KC_ESC,   KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
+        KC_ESC, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8,
         KC_GRV,   KC_1,     KC_2,    KC_3,    KC_4,    KC_5,
         KC_TAB,   KC_QUOT,  KC_COMM, KC_DOT,  KC_P,    KC_Y,
-        _CESC,    KC_A,     KC_O,    KC_E,    KC_U,    KC_I,
+        C_ESC,    KC_A,     KC_O,    KC_E,    KC_U,    KC_I,
         KC_NO,    KC_SCLN,  KC_Q,    KC_J,    KC_K,    KC_X,
                   _______,  _______, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
@@ -101,32 +112,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               MO(_SYM), KC_ENTER, KC_SPC
 ),
 
-[_BASE2] = LAYOUT(
-        KC_ESC,   KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        /* KC_GRV,   KC_1,     KC_2,    KC_3,    KC_4,    KC_5, */
-        KC_GRV,   KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,
-        KC_TAB,   KC_QUOT,  KC_COMM, KC_DOT,  KC_P,    KC_Y,
-        _CESC,    KC_A,     KC_O,    KC_E,    KC_U,    KC_I,
-        KC_NO,    KC_SCLN,  KC_Q,    KC_J,    KC_K,    KC_X,
-                  _______,  _______, KC_LEFT, KC_RGHT,
-                        /* thumb cluster */
-                        KC_LGUI, OSL(_COMMANDS),
-                                 KC_HYPR,
-              SFT_T(KC_BSPC), L_NUM, _______,
-
-        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
-        /* KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    _______, */
-        KC_NO,    KC_NO,  KC_NO,    KC_NO,   KC_NO,   KC_NO,
-        KC_F,     KC_G,   KC_C,     KC_R,    KC_L,    KC_SLSH,
-        KC_D,     KC_H,   KC_T,     KC_N,    KC_S,    KC_MINUS,
-        KC_B,     KC_M,   KC_W,     KC_V,    KC_Z,    _______,
-                  KC_UP,  KC_DOWN,  _______, _______,
-                        /* thumb cluster */
-                        KC_LALT,  KC_RGUI,
-                                  _______,
-              MO(_SYM), KC_ENTER, KC_SPC
+[_BASE2] = LAYOUT_kinesis_base_wrapper(
+        KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y,                    KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH,
+        C_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                    KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINUS,
+        KC_NO,  KC_SCLN, KC_Q,    KC_J,   KC_K, KC_X,                    KC_B, KC_M, KC_W, KC_V, KC_Z, KC_NO,
+                                             KC_LGUI, _CMDS,         KC_LALT, KC_RGUI,
+                                                      KC_HYPR,       KC_NO,
+                             SFT_T(KC_BSPC), L_NUM,   KC_NO,         MO(_SYM), KC_ENTER, KC_SPC
 ),
-
 [_CBASE] = LAYOUT(
         KC_ESC,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
         KC_GRV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
