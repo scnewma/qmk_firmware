@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 
 #include "keycodes.h"
+#include "oneshot.h"
+#include "tap_hold.h"
 
 #define UPPER 1
 #define STATE qk_tap_dance_state_t *state
@@ -56,6 +58,13 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset),
 };
 
+const uint16_t PROGMEM qj_combo[] = {KC_Q, KC_J, COMBO_END};
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(qj_combo, C(KC_U)),
+    COMBO(jk_combo, C(KC_D)),
+};
+
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 #define LAYOUT_kinesis_base( \
         K01, K02, K03, K04, K05, K06,                    K07, K08, K09, K10, K11, K12, \
@@ -67,7 +76,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     ) \
     LAYOUT_wrapper( \
         KC_ESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_F6, KC_F7, KC_F8, \
-        KC_GRV, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+        KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
         K01,    K02,     K03,     K04,     K05,     K06, \
         K13,    K14,     K15,     K16,     K17,     K18, \
         K25,    K26,     K27,     K28,     K29,     K30, \
@@ -114,12 +123,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BASE2] = LAYOUT_kinesis_base_wrapper(
         KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y,                    KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH,
-        C_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                    KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINUS,
+        KC_ESC, KC_A,    KC_O,    KC_E,   KC_U, KC_I,                    KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINUS,
         KC_NO,  KC_SCLN, KC_Q,    KC_J,   KC_K, KC_X,                    KC_B, KC_M, KC_W, KC_V, KC_Z, KC_NO,
                                              KC_LGUI, _CMDS,         KC_LALT, KC_RGUI,
                                                       KC_HYPR,       KC_NO,
-                             SFT_T(KC_BSPC), L_NUM,   KC_NO,         MO(_SYM), KC_ENTER, KC_SPC
+                          LT(_SFT, KC_BSPC), L_NUM,   KC_NO,         MO(_SYM), KC_ENTER, KC_SPC
 ),
+
+[_SFT] = LAYOUT_kinesis_base_wrapper(
+        KC_TAB, KC_DQUO,    KC_GRV,  KC_TILD, S(KC_P), S(KC_Y),               S(KC_F), S(KC_G), S(KC_C), S(KC_R), S(KC_L), S(KC_SLSH),
+        KC_ESC, S(KC_A),    S(KC_O), S(KC_E), S(KC_U), S(KC_I),               S(KC_D), S(KC_H), S(KC_T), S(KC_N), S(KC_S), S(KC_MINUS),
+        KC_NO,  S(KC_SCLN), S(KC_Q), S(KC_J), S(KC_K), S(KC_X),               S(KC_B), S(KC_M), S(KC_W), S(KC_V), S(KC_Z), KC_NO,
+                                                 KC_LGUI, _CMDS,         KC_LALT, KC_RGUI,
+                                                          KC_HYPR,       KC_NO,
+                                 SFT_T(KC_BSPC), L_NUM,   KC_NO,         MO(_SYM), KC_ENTER, KC_SPC
+),
+
 [_CBASE] = LAYOUT(
         KC_ESC,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
         KC_GRV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
@@ -231,11 +250,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     _______,
                   _______, _______, _______,
 
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO,
-        KC_PLUS, KC_AMPR, KC_ASTR, KC_DOT,  KC_EQL,    KC_NO,
-        KC_PIPE, KC_SLSH, KC_EXLM, KC_QUES, TD(_TILD), KC_NO,
-        KC_AT,   KC_PERC, TD(_LT), TD(_GT), KC_BSLS,   KC_NO,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_PLUS, KC_AMPR, KC_ASTR, KC_DOT,  KC_EQL,  KC_NO,
+        KC_PIPE, KC_SLSH, KC_EXLM, KC_QUES, KC_NO,   KC_NO,
+        KC_AT,   KC_PERC, TD(_LT), TD(_GT), KC_BSLS, KC_NO,
                KC_NO,   KC_NO,   KC_NO,   KC_NO,
                         /* thumb cluster */
                            _______, _______,
@@ -271,7 +290,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO,   KC_NO,   KC_NO,    KC_NO,     KC_NO, KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO,   KC_NO,   KC_NO,    KC_NO,     KC_NO,
         KC_NO, KC_NO,   KC_NO,   KC_NO,    KC_NO,     KC_NO,
-        KC_NO, KC_LCMD, KC_LOPT, KC_LSFT,  KC_LCTL,   KC_NO,
+        KC_NO, OS_SHFT, OS_ALT,  OS_CTRL,  OS_CMD,   KC_NO,
         KC_NO, KC_NO,   KC_NO,   TO(_RGX), TO(_SYM2), KC_NO,
                  KC_NO, KC_NO,   KC_NO,    KC_NO,
                         /* thumb cluster */
@@ -292,14 +311,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                _______, _______, KC_0
 )
 };
-
-void matrix_init_user(void) {
-
-}
-
-void matrix_scan_user(void) {
-
-}
 
 void register_unshifted_kc(uint16_t keycode, bool lsft_pressed, bool rsft_pressed) {
     // we need to unregister any registered shift presses since the kc that we
@@ -332,7 +343,22 @@ bool process_record_user_shifted_keycode(uint16_t keycode, uint16_t shifted_keyc
 }
 
 static uint16_t key_timer;
+
+oneshot_state os_shft_state = os_up_unqueued;
+oneshot_state os_ctrl_state = os_up_unqueued;
+oneshot_state os_alt_state = os_up_unqueued;
+oneshot_state os_cmd_state = os_up_unqueued;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_tap_hold(keycode, record)) {
+        return false;
+    }
+
+    update_oneshot(&os_shft_state, KC_LSFT, OS_SHFT, keycode, record);
+    update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record);
+    update_oneshot(&os_alt_state, KC_LALT, OS_ALT, keycode, record);
+    update_oneshot(&os_cmd_state, KC_LCMD, OS_CMD, keycode, record);
+
     switch (keycode) {
     case TMX_PRVW:
         if (record->event.pressed) {
@@ -351,9 +377,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             layer_off(_KEYPAD);
             layer_off(_RGX);
             layer_off(_SYM2);
-            /* if (timer_elapsed(key_timer) < TAPPING_TERM) { */
-            /*     tap_code16(KC_BSPC); */
-            /* } */
         }
         return false;
         break;
@@ -363,6 +386,72 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-void led_set_user(uint8_t usb_led) {
+bool is_oneshot_cancel_key(uint16_t keycode) {
+    switch (keycode) {
+    case L_NUM:
+        return true;
+    default:
+        return false;
+    }
+}
 
+bool is_oneshot_ignored_key(uint16_t keycode) {
+    switch (keycode) {
+    case L_NUM:
+    case KC_LSFT:
+    case OS_SHFT:
+    case OS_CTRL:
+    case OS_ALT:
+    case OS_CMD:
+        return true;
+    default:
+        return false;
+    }
+}
+
+void triple_tap(uint16_t keycode) {
+    tap_code16(keycode);
+    tap_code16(keycode);
+    tap_code16(keycode);
+}
+
+void tap16_repeatable(uint16_t keycode) {
+    tap_code16(keycode);
+    /* register_key_to_repeat(keycode); */
+}
+
+bool tap_hold(uint16_t keycode) {
+    switch (keycode) {
+        case KC_QUOT:
+        case KC_DQUO:
+        case KC_GRV:
+            return true;
+        default:
+            return false;
+    }
+}
+
+void tap_hold_send_hold(uint16_t keycode) {
+    switch (keycode) {
+        case KC_QUOT:
+        case KC_DQUO:
+        case KC_GRV:
+            triple_tap(keycode);
+            return;
+    }
+}
+
+void tap_hold_send_tap(uint16_t keycode) {
+    switch (keycode) {
+        default:
+            tap16_repeatable(keycode);
+    }
+}
+
+uint16_t tap_hold_timeout(uint16_t keycode) {
+    return 175;
+}
+
+void matrix_scan_user(void) {
+    tap_hold_matrix_scan();
 }

@@ -17,3 +17,7 @@ RGBLIGHT_ENABLE = no        # Enable WS2812 RGB underlight.
 SLEEP_LED_ENABLE = no       # Breathing sleep LED during USB suspend
 
 TAP_DANCE_ENABLE = yes
+COMBO_ENABLE = yes
+
+SRC += oneshot.c
+SRC += tap_hold.c

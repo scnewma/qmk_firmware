@@ -5,6 +5,7 @@
 enum layers {
     _BASE = 0,
     _BASE2,
+    _SFT,
     _CBASE,
     _QWERTY,
     _RGX,
@@ -17,6 +18,12 @@ enum layers {
 enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
     L_NUM,
+
+    // oneshot keycodes
+    OS_SHFT,
+    OS_CTRL,
+    OS_ALT,
+    OS_CMD,
 };
 
 #define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
