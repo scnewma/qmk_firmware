@@ -19,6 +19,9 @@ enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
     L_NUM,
 
+    // swapper keycodes
+    SW_WIN, // (cmd-tab)
+
     // oneshot keycodes
     OS_SHFT,
     OS_CTRL,
