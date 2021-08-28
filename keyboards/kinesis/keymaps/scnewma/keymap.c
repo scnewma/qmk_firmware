@@ -1,59 +1,142 @@
 #include QMK_KEYBOARD_H
 
 #define _BASE 0
-#define _SHIFTED 1
 #define _CBASE 2
-#define _CSFT 3
-#define _QWERTY 4
-#define _COMMANDS 5
-#define _KEYPAD 6
+#define _QWERTY 3
+#define _RGX 4
+#define _SYM 5
+#define _COMMANDS 6
+#define _KEYPAD 7
+#define _BASE2 8
+#define _SYM2 9
 
 //  TODO:
 //    CLIPSC and PRNTSC might be better combined onto one key using tap dance.
 //    PRNTSC would be the tap command and CLIPSC would be the hold command.
 #define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
 #define PRNTSC G(S(KC_4))           // Cmd-Shift-4 -> macOS Screenshot
+#define _CESC CTL_T(KC_ESC)        // control when held, escape when tapped
+
+#define UPPER 1
+#define STATE qk_tap_dance_state_t *state
+
+#define TAPS (state->count > 1)
+
+#define SHIFT(k) register_code(KC_LSFT); register_code(k)
+#define UNSHIFT(k) unregister_code(k); unregister_code(KC_LSFT)
+
+#define DANCE_TAP(s, u, k) if (TAPS) { send_string(s); } \
+                           else if (u) { SHIFT(k); } \
+                           else { register_code(k); } \
+                           reset_tap_dance(state)
 
 enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
+    /* LYR_BASE, */
+    /* RGXL */
+};
+
+void greater(STATE, void *user_data) {
+    DANCE_TAP(" -> ", UPPER, KC_DOT);
+}
+
+void greater_reset(STATE, void *user_data) {
+    UNSHIFT(KC_DOT);
+}
+
+void lesser(STATE, void *user_data) {
+    DANCE_TAP(" <- ", UPPER, KC_COMM);
+}
+
+void lesser_reset(STATE, void *user_data) {
+    UNSHIFT(KC_COMM);
+}
+
+void tilde(STATE, void *user_data) {
+    DANCE_TAP("~/", UPPER, KC_GRV);
+}
+
+void tilde_reset(STATE, void *user_data) {
+    UNSHIFT(KC_GRV);
+}
+
+// tap dance declarations
+enum {
+    _GT,
+    _LT,
+    _TILD,
+};
+
+// tap dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // send `>` on single tap, ` -> ` on double tap
+    [_GT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, greater, greater_reset),
+    // send `<` on single tap, ` <- ` on double tap
+    [_LT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lesser, lesser_reset),
+    // send `~` on single tap, `~/` on double tap
+    [_TILD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tilde, tilde_reset),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT(
-        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
-        KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,
-        KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,
-        _______, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,
-                 _______, KC_BSLS, KC_LEFT, KC_RGHT,
+        KC_ESC,   KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
+        KC_GRV,   KC_1,     KC_2,    KC_3,    KC_4,    KC_5,
+        KC_TAB,   KC_QUOT,  KC_COMM, KC_DOT,  KC_P,    KC_Y,
+        _CESC,    KC_A,     KC_O,    KC_E,    KC_U,    KC_I,
+        KC_NO,    KC_SCLN,  KC_Q,    KC_J,    KC_K,    KC_X,
+                  _______,  _______, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
-                        KC_LGUI,     OSL(_COMMANDS),
-                                     KC_HYPR,
-               KC_BSPC, KC_LSFT, KC_LCTL,
+                        KC_LGUI, OSL(_COMMANDS),
+                                 KC_HYPR,
+               KC_BSPC, KC_LSFT, MO(_RGX),
 
-        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
-        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
+        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, DF(_BASE2),  DF(_BASE), DF(_CBASE), DF(_QWERTY),
+        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    _______,
         KC_F,  KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
         KC_D,  KC_H,    KC_T,    KC_N,    KC_S,    KC_MINUS,
         KC_B,  KC_M,    KC_W,    KC_V,    KC_Z,    _______,
-               KC_UP,  KC_DOWN,  KC_LBRC, KC_RBRC,
+               KC_UP,  KC_DOWN,  _______, _______,
                         /* thumb cluster */
                         KC_LALT,  KC_RGUI,
                                   _______,
-               _______, KC_ENTER, KC_SPC
+              MO(_SYM), KC_ENTER, KC_SPC
+),
+
+[_BASE2] = LAYOUT(
+        KC_ESC,   KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
+        KC_GRV,   KC_1,     KC_2,    KC_3,    KC_4,    KC_5,
+        KC_TAB,   KC_QUOT,  KC_COMM, KC_DOT,  KC_P,    KC_Y,
+        _CESC,    KC_A,     KC_O,    KC_E,    KC_U,    KC_I,
+        KC_NO,    KC_SCLN,  KC_Q,    KC_J,    KC_K,    KC_X,
+                  _______,  _______, KC_LEFT, KC_RGHT,
+                        /* thumb cluster */
+                        KC_LGUI, OSL(_COMMANDS),
+                                 KC_HYPR,
+              _______, KC_LSFT, MO(_RGX),
+
+        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
+        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    _______,
+        KC_F,  KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
+        KC_D,  KC_H,    KC_T,    KC_N,    KC_S,    KC_MINUS,
+        KC_B,  KC_M,    KC_W,    KC_V,    KC_Z,    _______,
+               KC_UP,  KC_DOWN,  _______, _______,
+                        /* thumb cluster */
+                        KC_LALT,  KC_RGUI,
+                                  _______,
+              MO(_SYM), KC_ENTER, KC_SPC
 ),
 
 [_CBASE] = LAYOUT(
-        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
-        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,
-        KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,
+        KC_ESC,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
+        KC_GRV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
+        KC_TAB,   KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,
+        KC_ESC,   KC_A,    KC_R,    KC_S,    KC_T,    KC_D,
+        KC_NO,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,
                    KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
                         KC_LGUI, OSL(_COMMANDS),
                                  KC_HYPR,
-               KC_BSPC, _______, KC_LCTL,
+               KC_BSPC, KC_LSFT, KC_LCTL,
 
         KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
         KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
@@ -92,6 +175,78 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  KC_RGUI,  KC_RCTL,
                                            KC_PGUP,
                         KC_PGDN, KC_ENTER, KC_SPC
+),
+
+[_SYM] = LAYOUT(
+        KC_NO, KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO, KC_NO,     KC_DOT,  KC_ASTR, KC_AMPR, KC_PLUS,
+        KC_NO, TD(_TILD), KC_QUES, KC_EXLM, KC_SLSH, KC_PIPE,
+        KC_NO, KC_NO,     TD(_LT), TD(_GT), KC_PERC, KC_AT,
+               KC_NO,     KC_NO,   KC_NO,   KC_NO,
+                        /* thumb cluster */
+                           _______, _______,
+                                    _______,
+                  _______, KC_EQL,  KC_BSLS,
+
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
+        KC_ASTR, KC_LBRC, KC_CIRC, KC_RBRC, KC_NO, KC_NO,
+        KC_QUES, KC_LPRN, KC_DLR,  KC_RPRN, KC_NO, KC_NO,
+        KC_PIPE, KC_LCBR, KC_HASH, KC_RCBR, KC_NO, KC_NO,
+               KC_NO,   KC_NO,   KC_NO,   KC_NO,
+                        /* thumb cluster */
+                           _______, _______,
+                                    _______,
+                  _______, _______, _______
+),
+
+[_RGX] = LAYOUT(
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+               KC_NO, KC_NO,   KC_NO,   KC_NO,
+                        /* thumb cluster */
+                           _______, _______,
+                                    _______,
+                  _______, _______, _______,
+
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
+        KC_ASTR, KC_LBRC, KC_CIRC, KC_RBRC, KC_NO, KC_NO,
+        KC_QUES, KC_LPRN, KC_DLR,  KC_RPRN, KC_NO, KC_NO,
+        KC_PIPE, KC_LCBR, KC_HASH, KC_RCBR, KC_NO, KC_NO,
+               KC_NO,   KC_NO,   KC_NO,   KC_NO,
+                        /* thumb cluster */
+                           _______, _______,
+                                    _______,
+                  _______, _______, _______
+),
+
+[_SYM2] = LAYOUT(
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,
+               KC_NO, KC_NO,   KC_NO,   KC_NO,
+                        /* thumb cluster */
+                           _______, _______,
+                                    _______,
+                  _______, _______, _______,
+
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
+        KC_PLUS, KC_AMPR, KC_ASTR, KC_DOT,  KC_NO, KC_NO,
+        KC_PIPE, KC_BSLS, KC_EXLM, KC_QUES, KC_NO, KC_NO,
+        KC_AT,   KC_PERC, TD(_LT), TD(_GT), KC_NO, KC_NO,
+               KC_NO,   KC_NO,   KC_NO,   KC_NO,
+                        /* thumb cluster */
+                           _______, _______,
+                                    _______,
+                  _______, _______, _______
 ),
 
 [_COMMANDS] = LAYOUT(
@@ -190,41 +345,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code16(C(KC_SPC));
             tap_code16(C(KC_SPC));
         }
+        return false;
         break;
 
-    // handle my non-default shifted keycodes
-    /* case KC_DLR: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_GRV, record); */
-    /* case KC_PLUS: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_1, record); */
-    /* case KC_LBRC: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_2, record); */
-    /* case KC_LCBR: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_3, record); */
-    /* case KC_LPRN: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_4, record); */
-    /* case KC_AMPR: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_5, record); */
-    /* case KC_EQL: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_6, record); */
-    /* case KC_RPRN: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_7, record); */
-    /* case KC_RCBR: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_8, record); */
-    /* case KC_RBRC: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_9, record); */
-    /* case KC_ASTR: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_0, record); */
-    /* case KC_EXLM: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_PERC, record); */
-    /* case KC_BSLS: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_HASH, record); */
-    /* case KC_AT: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_CIRC, record); */
-    /* case KC_ESC: */
-    /*     return process_record_user_shifted_keycode(keycode, KC_TILD, record); */
+    /* case LYR_BASE: */
+    /*     /1* if (record->event.pressed) { *1/ */
+    /*     /1*     layer_on(_RGX); *1/ */
+    /*     /1* } else { *1/ */
+    /*     /1*     layer_off(_RGX); *1/ */
+    /*     /1* } *1/ */
+    /*     return false; */
+    /*     break; */
+
+    default:
+        return true;
     }
-    return true;
 }
 
 void led_set_user(uint8_t usb_led) {
