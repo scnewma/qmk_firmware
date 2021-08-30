@@ -28,7 +28,6 @@ const uint16_t PROGMEM ex_pipe_combo[] = {KC_N, KC_R, COMBO_END};
 const uint16_t PROGMEM q_combo[] = {KC_SCLN, KC_UNDS, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(q_combo, KC_Q),
     [CTL_U_COMBO] = COMBO_ACTION(ctl_u_combo),
     [CTL_D_COMBO] = COMBO_ACTION(ctl_d_combo),
     [ESC_COMBO] = COMBO_ACTION(esc_combo),
