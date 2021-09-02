@@ -12,6 +12,7 @@ enum layers {
     _RNUM,
     _RGX,
     _SYM,
+    _CMD,
     _COMMANDS,
     _KEYPAD,
     _SYM2
@@ -20,6 +21,7 @@ enum layers {
 enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
     L_NUM,
+    L_CMD,
 
     // swapper keycodes
     SW_WIN, // (cmd-tab)

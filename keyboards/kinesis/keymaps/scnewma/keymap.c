@@ -12,18 +12,11 @@ enum combo_events {
     ESC_COMBO,
     TAB_COMBO,
     Q_COMBO,
-    CAP_Q_COMBO,
+    /* CAP_Q_COMBO, */
     SM_ARROW_LEFT_COMBO,
     SM_ARROW_RIGHT_COMBO,
     LG_ARROW_RIGHT_COMBO,
     EX_PIPE_COMBO,
-    /* LPRN_COMBO, */
-    /* RPRN_COMBO, */
-    /* LBRC_COMBO, */
-    /* RBRC_COMBO, */
-    /* LCBR_COMBO, */
-    /* RCBR_COMBO, */
-    /* EQL_COMBO, */
     SLSH_COMBO,
 };
 
@@ -36,15 +29,8 @@ const uint16_t PROGMEM sm_arrow_left_combo[] = {KC_T, KC_W, COMBO_END};
 const uint16_t PROGMEM sm_arrow_right_combo[] = {KC_N, KC_V, COMBO_END};
 const uint16_t PROGMEM lg_arrow_right_combo[] = {KC_T, KC_C, COMBO_END};
 const uint16_t PROGMEM ex_pipe_combo[] = {KC_N, KC_R, COMBO_END};
-const uint16_t PROGMEM q_combo[] = {KC_SCLN, KC_UNDS, COMBO_END};
-const uint16_t PROGMEM cap_q_combo[] = {KC_COLN, KC_MINS, COMBO_END};
-/* const uint16_t PROGMEM lprn_combo[] = {KC_H, KC_T, COMBO_END}; */
-/* const uint16_t PROGMEM rprn_combo[] = {KC_T, KC_N, COMBO_END}; */
-/* const uint16_t PROGMEM lbrc_combo[] = {KC_G, KC_C, COMBO_END}; */
-/* const uint16_t PROGMEM rbrc_combo[] = {KC_C, KC_R, COMBO_END}; */
-/* const uint16_t PROGMEM lcbr_combo[] = {KC_M, KC_W, COMBO_END}; */
-/* const uint16_t PROGMEM rcbr_combo[] = {KC_W, KC_V, COMBO_END}; */
-/* const uint16_t PROGMEM eql_combo[] = {KC_R, KC_L, COMBO_END}; */
+const uint16_t PROGMEM q_combo[] = {KC_COMM, KC_DOT, COMBO_END};
+/* const uint16_t PROGMEM cap_q_combo[] = {KC_COLN, KC_MINS, COMBO_END}; */
 const uint16_t PROGMEM slsh_combo[] = {KC_H, KC_T, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
@@ -54,18 +40,11 @@ combo_t key_combos[COMBO_COUNT] = {
     [ESC_COMBO] = COMBO_ACTION(esc_combo),
     [TAB_COMBO] = COMBO_ACTION(tab_combo),
     [Q_COMBO] = COMBO_ACTION(q_combo),
-    [CAP_Q_COMBO] = COMBO_ACTION(cap_q_combo),
+    /* [CAP_Q_COMBO] = COMBO_ACTION(cap_q_combo), */
     [SM_ARROW_LEFT_COMBO] = COMBO_ACTION(sm_arrow_left_combo),
     [SM_ARROW_RIGHT_COMBO] = COMBO_ACTION(sm_arrow_right_combo),
     [LG_ARROW_RIGHT_COMBO] = COMBO_ACTION(lg_arrow_right_combo),
     [EX_PIPE_COMBO] = COMBO_ACTION(ex_pipe_combo),
-    /* [LPRN_COMBO] = COMBO_ACTION(lprn_combo), */
-    /* [RPRN_COMBO] = COMBO_ACTION(rprn_combo), */
-    /* [LBRC_COMBO] = COMBO_ACTION(lbrc_combo), */
-    /* [RBRC_COMBO] = COMBO_ACTION(rbrc_combo), */
-    /* [LCBR_COMBO] = COMBO_ACTION(lcbr_combo), */
-    /* [RCBR_COMBO] = COMBO_ACTION(rcbr_combo), */
-    /* [EQL_COMBO] = COMBO_ACTION(eql_combo), */
     [SLSH_COMBO] = COMBO_ACTION(slsh_combo),
 };
 
@@ -121,44 +100,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code16(KC_Q);
             }
             break;
-        case CAP_Q_COMBO:
-            if (pressed) {
-                tap_code16(S(KC_Q));
-            }
-            break;
-        /* case LPRN_COMBO: */
+        /* case CAP_Q_COMBO: */
         /*     if (pressed) { */
-        /*         tap_code16(KC_LPRN); */
-        /*     } */
-        /*     break; */
-        /* case RPRN_COMBO: */
-        /*     if (pressed) { */
-        /*         tap_code16(KC_RPRN); */
-        /*     } */
-        /*     break; */
-        /* case LBRC_COMBO: */
-        /*     if (pressed) { */
-        /*         tap_code16(KC_LBRC); */
-        /*     } */
-        /*     break; */
-        /* case RBRC_COMBO: */
-        /*     if (pressed) { */
-        /*         tap_code16(KC_RBRC); */
-        /*     } */
-        /*     break; */
-        /* case LCBR_COMBO: */
-        /*     if (pressed) { */
-        /*         tap_code16(KC_LCBR); */
-        /*     } */
-        /*     break; */
-        /* case RCBR_COMBO: */
-        /*     if (pressed) { */
-        /*         tap_code16(KC_RCBR); */
-        /*     } */
-        /*     break; */
-        /* case EQL_COMBO: */
-        /*     if (pressed) { */
-        /*         tap_code16(KC_EQL); */
+        /*         tap_code16(S(KC_Q)); */
         /*     } */
         /*     break; */
         case SLSH_COMBO:
@@ -183,7 +127,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         XXXXXXX, K14,     K15,     K16,     K17,     K18, \
         XXXXXXX, K26,     K27,     K28,     K29,     K30, \
                  _______, _______, KC_LEFT, KC_RGHT, \
-                                                     XXXXXXX, OSL(_COMMANDS), \
+                                                       L_CMD, OSL(_COMMANDS), \
                                                               XXXXXXX, \
                                                   K43, K44,   XXXXXXX, \
         KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_PSCR,  KC_SLCK, DF(_BASE), DF(_BASE2), DF(_QWERTY), \
@@ -227,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_DQUO, KC_COMM, KC_DOT, KC_P, KC_Y,                    KC_F, KC_G, KC_C, KC_R, KC_L,
         KC_A,    KC_O,    KC_E,   KC_U, KC_I,                    KC_D, KC_H, KC_T, KC_N, KC_S,
         KC_SCLN, KC_UNDS, KC_J,   KC_K, KC_X,                    KC_B, KC_M, KC_W, KC_V, KC_Z,
-                          LT(_SFT, KC_BSPC), L_NUM,        LT(_LRGX, KC_ENTER), KC_SPC
+                          LT(_SFT, KC_BSPC), L_NUM,        KC_ENTER, KC_SPC
 ),
 
 [_SFT] = LAYOUT_kinesis_base_wrapper(
@@ -237,20 +181,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______, L_NUM,       KC_ENTER, KC_SPC
 ),
 
-// + = ? / \ |
-// /
 [_LRGX] = LAYOUT_kinesis_base_wrapper(
-        XXXXXXX, KC_QUES, KC_LBRC, KC_RBRC, KC_PLUS,               XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
+        KC_QUOT, KC_QUES, KC_LBRC, KC_RBRC, KC_PLUS,               XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
         KC_LT,   KC_GT,   KC_LPRN, KC_RPRN, KC_PIPE,               XXXXXXX, OS_CMD,   OS_CTRL,   OS_ALT,   OS_SHFT,
-        XXXXXXX, KC_EQL,  KC_LCBR, KC_RCBR, KC_BSLS,               XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
+        KC_SCLN, KC_EQL,  KC_LCBR, KC_RCBR, KC_BSLS,               XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
                                            KC_BSPC, L_NUM,     _______, XXXXXXX
 ),
 
 [_RNUM] = LAYOUT_kinesis_base_wrapper(
-        XXXXXXX, SW_WIN,  XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, KC_7, KC_8, KC_9, XXXXXXX,
-        OS_SHFT, OS_ALT,  OS_CTRL, OS_CMD,  TPFX,                  XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, KC_1, KC_2, KC_3, XXXXXXX,
-                                       XXXXXXX, _______,     LT(_LRGX, KC_ENTER), KC_0
+        KC_QUOT, KC_LBRC, KC_RBRC, XXXXXXX, XXXXXXX,               KC_EQL,  KC_7, KC_8, KC_9, KC_PLUS,
+        KC_LT,   KC_LPRN, KC_RPRN, KC_GT,   KC_BSLS,               KC_BSPC, KC_4, KC_5, KC_6, KC_MINS,
+        KC_SCLN, KC_LCBR, KC_RCBR, KC_QUES, KC_PIPE,               KC_DOT,  KC_1, KC_2, KC_3, KC_SLSH,
+                                       XXXXXXX, _______,        KC_ENTER, KC_0
+),
+
+[_CMD] = LAYOUT_kinesis_base_wrapper(
+        XXXXXXX, SW_WIN,  XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        OS_SHFT, OS_ALT,  OS_CTRL, OS_CMD,  TPFX,                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                           XXXXXXX, L_NUM,     KC_ENTER, XXXXXXX
 ),
 
 [_SYM] = LAYOUT(
@@ -414,13 +363,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case L_NUM:
         if (record->event.pressed) {
             key_timer = timer_read();
-            /* layer_on(_KEYPAD); */
             layer_on(_RNUM);
         } else {
             layer_off(_RNUM);
-            /* layer_off(_KEYPAD); */
-            /* layer_off(_RGX); */
-            /* layer_off(_SYM2); */
+        }
+        return false;
+        break;
+
+    case L_CMD:
+        if (record->event.pressed) {
+            layer_on(_CMD);
+        } else {
+            layer_off(_CMD);
         }
         return false;
         break;
@@ -432,7 +386,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
-    case L_NUM:
+    case L_CMD:
         return true;
     default:
         return false;
@@ -442,6 +396,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
     case L_NUM:
+    case L_CMD:
     case KC_LSFT:
     case OS_SHFT:
     case OS_CTRL:
@@ -471,9 +426,12 @@ void tap16_repeatable(uint16_t keycode) {
 
 bool tap_hold(uint16_t keycode) {
     switch (keycode) {
-        case KC_QUOT:
         case KC_DQUO:
+        case KC_QUOT:
+        case KC_UNDS:
+        case KC_MINS:
         case KC_GRV:
+        case KC_SCLN:
         case KC_1:
         case KC_2:
         case KC_3:
@@ -492,11 +450,21 @@ bool tap_hold(uint16_t keycode) {
 
 void tap_hold_send_hold(uint16_t keycode) {
     switch (keycode) {
-        case KC_QUOT:
         case KC_DQUO:
+            tap_code16(KC_QUOT);
+            return;
+        case KC_UNDS:
+            tap_code16(KC_MINS);
+            return;
         case KC_GRV:
             triple_tap(keycode);
             return;
+        case KC_0:
+            tap_code16(KC_SPC);
+            return;
+        case KC_QUOT:
+        case KC_MINS:
+        case KC_SCLN:
         case KC_1:
         case KC_2:
         case KC_3:
@@ -506,8 +474,7 @@ void tap_hold_send_hold(uint16_t keycode) {
         case KC_7:
         case KC_8:
         case KC_9:
-        case KC_0:
-            // send symbols when numbers are held
+            // send shifted symbols when held
             tap_code16(S(keycode));
             return;
     }
@@ -521,7 +488,7 @@ void tap_hold_send_tap(uint16_t keycode) {
 }
 
 uint16_t tap_hold_timeout(uint16_t keycode) {
-    return 175;
+    return 150;
 }
 
 void matrix_scan_user(void) {
