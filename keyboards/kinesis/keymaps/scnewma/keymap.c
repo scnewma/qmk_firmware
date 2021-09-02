@@ -8,17 +8,28 @@
 enum combo_events {
     CTL_U_COMBO,
     CTL_D_COMBO,
+    CTL_Z_COMBO,
     ESC_COMBO,
     TAB_COMBO,
     Q_COMBO,
+    CAP_Q_COMBO,
     SM_ARROW_LEFT_COMBO,
     SM_ARROW_RIGHT_COMBO,
     LG_ARROW_RIGHT_COMBO,
     EX_PIPE_COMBO,
+    /* LPRN_COMBO, */
+    /* RPRN_COMBO, */
+    /* LBRC_COMBO, */
+    /* RBRC_COMBO, */
+    /* LCBR_COMBO, */
+    /* RCBR_COMBO, */
+    /* EQL_COMBO, */
+    SLSH_COMBO,
 };
 
 const uint16_t PROGMEM ctl_u_combo[] = {KC_UNDS, KC_J, COMBO_END};
 const uint16_t PROGMEM ctl_d_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM ctl_z_combo[] = {KC_K, KC_X, COMBO_END};
 const uint16_t PROGMEM esc_combo[] = {KC_E, KC_U, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {KC_O, KC_E, COMBO_END};
 const uint16_t PROGMEM sm_arrow_left_combo[] = {KC_T, KC_W, COMBO_END};
@@ -26,17 +37,36 @@ const uint16_t PROGMEM sm_arrow_right_combo[] = {KC_N, KC_V, COMBO_END};
 const uint16_t PROGMEM lg_arrow_right_combo[] = {KC_T, KC_C, COMBO_END};
 const uint16_t PROGMEM ex_pipe_combo[] = {KC_N, KC_R, COMBO_END};
 const uint16_t PROGMEM q_combo[] = {KC_SCLN, KC_UNDS, COMBO_END};
+const uint16_t PROGMEM cap_q_combo[] = {KC_COLN, KC_MINS, COMBO_END};
+/* const uint16_t PROGMEM lprn_combo[] = {KC_H, KC_T, COMBO_END}; */
+/* const uint16_t PROGMEM rprn_combo[] = {KC_T, KC_N, COMBO_END}; */
+/* const uint16_t PROGMEM lbrc_combo[] = {KC_G, KC_C, COMBO_END}; */
+/* const uint16_t PROGMEM rbrc_combo[] = {KC_C, KC_R, COMBO_END}; */
+/* const uint16_t PROGMEM lcbr_combo[] = {KC_M, KC_W, COMBO_END}; */
+/* const uint16_t PROGMEM rcbr_combo[] = {KC_W, KC_V, COMBO_END}; */
+/* const uint16_t PROGMEM eql_combo[] = {KC_R, KC_L, COMBO_END}; */
+const uint16_t PROGMEM slsh_combo[] = {KC_H, KC_T, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     [CTL_U_COMBO] = COMBO_ACTION(ctl_u_combo),
     [CTL_D_COMBO] = COMBO_ACTION(ctl_d_combo),
+    [CTL_Z_COMBO] = COMBO_ACTION(ctl_z_combo),
     [ESC_COMBO] = COMBO_ACTION(esc_combo),
     [TAB_COMBO] = COMBO_ACTION(tab_combo),
     [Q_COMBO] = COMBO_ACTION(q_combo),
+    [CAP_Q_COMBO] = COMBO_ACTION(cap_q_combo),
     [SM_ARROW_LEFT_COMBO] = COMBO_ACTION(sm_arrow_left_combo),
     [SM_ARROW_RIGHT_COMBO] = COMBO_ACTION(sm_arrow_right_combo),
     [LG_ARROW_RIGHT_COMBO] = COMBO_ACTION(lg_arrow_right_combo),
     [EX_PIPE_COMBO] = COMBO_ACTION(ex_pipe_combo),
+    /* [LPRN_COMBO] = COMBO_ACTION(lprn_combo), */
+    /* [RPRN_COMBO] = COMBO_ACTION(rprn_combo), */
+    /* [LBRC_COMBO] = COMBO_ACTION(lbrc_combo), */
+    /* [RBRC_COMBO] = COMBO_ACTION(rbrc_combo), */
+    /* [LCBR_COMBO] = COMBO_ACTION(lcbr_combo), */
+    /* [RCBR_COMBO] = COMBO_ACTION(rcbr_combo), */
+    /* [EQL_COMBO] = COMBO_ACTION(eql_combo), */
+    [SLSH_COMBO] = COMBO_ACTION(slsh_combo),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -71,6 +101,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code16(C(KC_D));
             }
             break;
+        case CTL_Z_COMBO:
+            if (pressed) {
+                tap_code16(C(KC_Z));
+            }
+            break;
         case ESC_COMBO:
             if (pressed) {
                 tap_code16(KC_ESC);
@@ -86,6 +121,51 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code16(KC_Q);
             }
             break;
+        case CAP_Q_COMBO:
+            if (pressed) {
+                tap_code16(S(KC_Q));
+            }
+            break;
+        /* case LPRN_COMBO: */
+        /*     if (pressed) { */
+        /*         tap_code16(KC_LPRN); */
+        /*     } */
+        /*     break; */
+        /* case RPRN_COMBO: */
+        /*     if (pressed) { */
+        /*         tap_code16(KC_RPRN); */
+        /*     } */
+        /*     break; */
+        /* case LBRC_COMBO: */
+        /*     if (pressed) { */
+        /*         tap_code16(KC_LBRC); */
+        /*     } */
+        /*     break; */
+        /* case RBRC_COMBO: */
+        /*     if (pressed) { */
+        /*         tap_code16(KC_RBRC); */
+        /*     } */
+        /*     break; */
+        /* case LCBR_COMBO: */
+        /*     if (pressed) { */
+        /*         tap_code16(KC_LCBR); */
+        /*     } */
+        /*     break; */
+        /* case RCBR_COMBO: */
+        /*     if (pressed) { */
+        /*         tap_code16(KC_RCBR); */
+        /*     } */
+        /*     break; */
+        /* case EQL_COMBO: */
+        /*     if (pressed) { */
+        /*         tap_code16(KC_EQL); */
+        /*     } */
+        /*     break; */
+        case SLSH_COMBO:
+            if (pressed) {
+                tap_code16(KC_SLSH);
+            }
+            break;
     }
 }
 
@@ -97,24 +177,24 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                             K43, K44,          K47, K48 \
     ) \
     LAYOUT_wrapper( \
-        KC_ESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_F6, KC_F7, KC_F8, \
-        KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-        KC_NO,  K02,     K03,     K04,     K05,     K06, \
-        KC_NO,  K14,     K15,     K16,     K17,     K18, \
-        KC_NO,  K26,     K27,     K28,     K29,     K30, \
-                KC_TRNS, KC_TRNS, KC_LEFT, KC_RGHT, \
-                                                       KC_NO, OSL(_COMMANDS), \
-                                                              KC_NO, \
-                                                  K43, K44,   KC_NO, \
-        KC_F9, KC_F10, KC_F11,   KC_F12,  KC_PSCR, KC_SLCK, DF(_BASE), DF(_CBASE), DF(_QWERTY), \
-        KC_NO, KC_NO,  KC_NO,    KC_NO,   KC_NO,   KC_NO, \
-        K07,   K08,    K09,      K10,     K11,     KC_NO, \
-        K19,   K20,    K21,      K22,     K23,     KC_NO, \
-        K31,   K32,    K33,      K34,     K35,     KC_NO, \
-               KC_UP,  KC_DOWN,  KC_TRNS, KC_TRNS, \
-                                                      KC_NO, KC_NO, \
-                                                             KC_NO, \
-                                               KC_NO, K47,   K48 \
+        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_F6, KC_F7, KC_F8, \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        XXXXXXX, K02,     K03,     K04,     K05,     K06, \
+        XXXXXXX, K14,     K15,     K16,     K17,     K18, \
+        XXXXXXX, K26,     K27,     K28,     K29,     K30, \
+                 _______, _______, KC_LEFT, KC_RGHT, \
+                                                     XXXXXXX, OSL(_COMMANDS), \
+                                                              XXXXXXX, \
+                                                  K43, K44,   XXXXXXX, \
+        KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_PSCR,  KC_SLCK, DF(_BASE), DF(_BASE2), DF(_QWERTY), \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+        K07,     K08,    K09,      K10,     K11,     XXXXXXX, \
+        K19,     K20,    K21,      K22,     K23,     XXXXXXX, \
+        K31,     K32,    K33,      K34,     K35,     XXXXXXX, \
+                 KC_UP,  KC_DOWN,  _______, _______, \
+                                                    XXXXXXX, XXXXXXX, \
+                                                             XXXXXXX, \
+                                               XXXXXXX, K47,   K48 \
     )
 #define LAYOUT_kinesis_base_wrapper(...) LAYOUT_kinesis_base(__VA_ARGS__)
 
@@ -124,210 +204,150 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,   KC_1,     KC_2,    KC_3,    KC_4,    KC_5,
         KC_TAB,   KC_QUOT,  KC_COMM, KC_DOT,  KC_P,    KC_Y,
         C_ESC,    KC_A,     KC_O,    KC_E,    KC_U,    KC_I,
-        KC_NO,    KC_SCLN,  KC_Q,    KC_J,    KC_K,    KC_X,
-                  _______,  _______, KC_LEFT, KC_RGHT,
+        XXXXXXX,  KC_SCLN,  KC_Q,    KC_J,    KC_K,    KC_X,
+                  XXXXXXX,  XXXXXXX, KC_LEFT, KC_RGHT,
                         /* thumb cluster */
                         KC_LGUI, OSL(_COMMANDS),
                                  KC_HYPR,
                KC_BSPC, KC_LSFT, MO(_RGX),
 
-        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, _______,  DF(_BASE), DF(_BASE2), DF(_QWERTY),
-        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    _______,
+        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, XXXXXXX,  DF(_BASE), DF(_BASE2), DF(_QWERTY),
+        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
         KC_F,  KC_G,    KC_C,    KC_R,    KC_L,    KC_SLSH,
         KC_D,  KC_H,    KC_T,    KC_N,    KC_S,    KC_MINUS,
-        KC_B,  KC_M,    KC_W,    KC_V,    KC_Z,    _______,
-               KC_UP,  KC_DOWN,  _______, _______,
+        KC_B,  KC_M,    KC_W,    KC_V,    KC_Z,    XXXXXXX,
+               KC_UP,  KC_DOWN,  XXXXXXX, XXXXXXX,
                         /* thumb cluster */
                         KC_LALT,  KC_RGUI,
-                                  _______,
+                                  XXXXXXX,
               MO(_SYM), KC_ENTER, KC_SPC
 ),
 
 [_BASE2] = LAYOUT_kinesis_base_wrapper(
-        KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y,                    KC_F, KC_G, KC_C, KC_R, KC_L,
+        KC_DQUO, KC_COMM, KC_DOT, KC_P, KC_Y,                    KC_F, KC_G, KC_C, KC_R, KC_L,
         KC_A,    KC_O,    KC_E,   KC_U, KC_I,                    KC_D, KC_H, KC_T, KC_N, KC_S,
         KC_SCLN, KC_UNDS, KC_J,   KC_K, KC_X,                    KC_B, KC_M, KC_W, KC_V, KC_Z,
-                          LT(_SFT, KC_BSPC), L_NUM,        KC_ENTER, KC_SPC
+                          LT(_SFT, KC_BSPC), L_NUM,        LT(_LRGX, KC_ENTER), KC_SPC
 ),
 
 [_SFT] = LAYOUT_kinesis_base_wrapper(
-        KC_DQUO,    KC_GRV,  KC_TILD, S(KC_P), S(KC_Y),               S(KC_F), S(KC_G), S(KC_C), S(KC_R), S(KC_L),
+        KC_QUOT,    KC_GRV,  KC_TILD, S(KC_P), S(KC_Y),               S(KC_F), S(KC_G), S(KC_C), S(KC_R), S(KC_L),
         S(KC_A),    S(KC_O), S(KC_E), S(KC_U), S(KC_I),               S(KC_D), S(KC_H), S(KC_T), S(KC_N), S(KC_S),
         S(KC_SCLN), KC_MINS, S(KC_J), S(KC_K), S(KC_X),               S(KC_B), S(KC_M), S(KC_W), S(KC_V), S(KC_Z),
-                                            KC_TRNS, L_NUM,       KC_ENTER, KC_SPC
+                                            _______, L_NUM,       KC_ENTER, KC_SPC
 ),
 
-[_CBASE] = LAYOUT(
-        KC_ESC,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6, KC_F7, KC_F8,
-        KC_GRV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
-        KC_TAB,   KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,
-        KC_ESC,   KC_A,    KC_R,    KC_S,    KC_T,    KC_D,
-        KC_NO,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,
-                   KC_PIPE, KC_BSLS, KC_LEFT, KC_RGHT,
-                        /* thumb cluster */
-                        KC_LGUI, OSL(_COMMANDS),
-                                 KC_HYPR,
-               KC_BSPC, KC_LSFT, KC_LCTL,
-
-        KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK,  DF(_BASE), DF(_CBASE), DF(_QWERTY),
-        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
-        KC_J,  KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINUS,
-        KC_H,  KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-        KC_K,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-               KC_UP,   KC_DOWN, KC_AT,   _______,
-                        /* thumb cluster */
-                       KC_LALT,  KC_RGUI,
-                                 _______,
-              _______, KC_ENTER, KC_SPC
+// + = ? / \ |
+// /
+[_LRGX] = LAYOUT_kinesis_base_wrapper(
+        XXXXXXX, KC_QUES, KC_LBRC, KC_RBRC, KC_PLUS,               XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
+        KC_LT,   KC_GT,   KC_LPRN, KC_RPRN, KC_PIPE,               XXXXXXX, OS_CMD,   OS_CTRL,   OS_ALT,   OS_SHFT,
+        XXXXXXX, KC_EQL,  KC_LCBR, KC_RCBR, KC_BSLS,               XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,
+                                           KC_BSPC, L_NUM,     _______, XXXXXXX
 ),
 
-// A qwerty layout that I use for gaming.
-// Changes made to standard qwerty:
-// * swapped CAPS LOCK with ESC
-[_QWERTY] = LAYOUT(
-        KC_ESC,  KC_F1,  KC_F2,   KC_F3,   KC_F4, KC_F5, KC_F6, KC_F7, KC_F8,
-        KC_EQL,  KC_1,   KC_2,    KC_3,    KC_4,  KC_5,
-        KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,  KC_T,
-        KC_ESC,  KC_A,   KC_S,    KC_D,    KC_F,  KC_G,
-        KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,  KC_B,
-                 KC_GRV,  KC_INS, KC_LEFT, KC_RGHT,
-                        /* thumb cluster */
-                                KC_LCTL, KC_LALT,
-                                         KC_HOME,
-                       KC_BSPC, KC_DEL,  KC_END,
-
-        KC_F9, KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK, DF(_BASE), DF(_CBASE), DF(_QWERTY),
-        KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_Y,  KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
-        KC_H,  KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-        KC_N,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-               KC_UP, KC_DOWN, KC_LBRC, KC_RBRC,
-                        /* thumb cluster */
-                                 KC_RGUI,  KC_RCTL,
-                                           KC_PGUP,
-                        KC_PGDN, KC_ENTER, KC_SPC
+[_RNUM] = LAYOUT_kinesis_base_wrapper(
+        XXXXXXX, SW_WIN,  XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, KC_7, KC_8, KC_9, XXXXXXX,
+        OS_SHFT, OS_ALT,  OS_CTRL, OS_CMD,  TPFX,                  XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, KC_1, KC_2, KC_3, XXXXXXX,
+                                       XXXXXXX, _______,     LT(_LRGX, KC_ENTER), KC_0
 ),
 
 [_SYM] = LAYOUT(
-        KC_NO, KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,
-        KC_NO, KC_NO,     KC_DOT,  KC_ASTR, KC_AMPR, KC_PLUS,
-        KC_NO, KC_TILD,   KC_QUES, KC_EXLM, KC_SLSH, KC_PIPE,
-        KC_NO, KC_NO,     KC_LT,   KC_GT,   KC_PERC, KC_AT,
-               KC_NO,     KC_NO,   KC_NO,   KC_NO,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, KC_DOT,  KC_ASTR, KC_AMPR, KC_PLUS,
+        XXXXXXX, KC_TILD, KC_QUES, KC_EXLM, KC_SLSH, KC_PIPE,
+        XXXXXXX, XXXXXXX, KC_LT,   KC_GT,   KC_PERC, KC_AT,
+                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                         /* thumb cluster */
-                           _______, _______,
-                                    _______,
-                  _______, KC_EQL,  KC_BSLS,
+                           XXXXXXX, XXXXXXX,
+                                    XXXXXXX,
+                  XXXXXXX, KC_EQL,  KC_BSLS,
 
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
-        KC_ASTR, KC_LBRC, KC_CIRC, KC_RBRC, KC_NO, KC_NO,
-        KC_QUES, KC_LPRN, KC_DLR,  KC_RPRN, KC_NO, KC_NO,
-        KC_PIPE, KC_LCBR, KC_HASH, KC_RCBR, KC_NO, KC_NO,
-               KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_ASTR, KC_LBRC, KC_CIRC, KC_RBRC, XXXXXXX, XXXXXXX,
+        KC_QUES, KC_LPRN, KC_DLR,  KC_RPRN, XXXXXXX, XXXXXXX,
+        KC_PIPE, KC_LCBR, KC_HASH, KC_RCBR, XXXXXXX, XXXXXXX,
+                 XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
                         /* thumb cluster */
-                           _______, _______,
-                                    _______,
-                  _______, _______, _______
+                           XXXXXXX, XXXXXXX,
+                                    XXXXXXX,
+                  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 [_RGX] = LAYOUT(
-        KC_NO, KC_NO,   KC_NO,       KC_NO,   KC_NO,     KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO,   KC_NO,       KC_NO,   KC_NO,     KC_NO,
-        KC_NO, KC_NO,   KC_NO,       KC_NO,   KC_NO,     KC_NO,
-        KC_NO, KC_LCMD, KC_LOPT,     KC_LSFT, KC_LCTL,   KC_NO,
-        KC_NO, KC_NO,   TO(_KEYPAD), KC_NO,   TO(_SYM2), KC_NO,
-               KC_NO,   KC_NO,       KC_NO,   KC_NO,
+        XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX,   XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX,   XXXXXXX,
+        XXXXXXX, KC_LCMD, KC_LOPT,     KC_LSFT, KC_LCTL,   XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, TO(_SYM2), XXXXXXX,
+                 XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX,
                         /* thumb cluster */
-                           _______, _______,
-                                    _______,
-                  _______, _______, _______,
+                           XXXXXXX, XXXXXXX,
+                                    XXXXXXX,
+                  XXXXXXX, XXXXXXX, XXXXXXX,
 
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
-        KC_ASTR, KC_LBRC, KC_CIRC, KC_RBRC, KC_NO, KC_NO,
-        KC_QUES, KC_LPRN, KC_DLR,  KC_RPRN, KC_NO, KC_NO,
-        KC_PIPE, KC_LCBR, KC_HASH, KC_RCBR, KC_NO, KC_NO,
-               KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_ASTR, KC_LBRC, KC_CIRC, KC_RBRC, XXXXXXX, XXXXXXX,
+        KC_QUES, KC_LPRN, KC_DLR,  KC_RPRN, XXXXXXX, XXXXXXX,
+        KC_PIPE, KC_LCBR, KC_HASH, KC_RCBR, XXXXXXX, XXXXXXX,
+                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                         /* thumb cluster */
-                           _______, _______,
-                                    _______,
-                  _______, _______, _______
+                           XXXXXXX, XXXXXXX,
+                                    XXXXXXX,
+                  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 [_SYM2] = LAYOUT(
-        KC_NO, KC_NO,   KC_NO,       KC_NO,    KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO,   KC_NO,       KC_NO,    KC_NO,   KC_NO,
-        KC_NO, KC_NO,   KC_NO,       KC_NO,    KC_NO,   KC_NO,
-        KC_NO, KC_LCMD, KC_LOPT,     KC_LSFT,  KC_LCTL, KC_NO,
-        KC_NO, KC_NO,   TO(_KEYPAD), TO(_RGX), KC_NO,   KC_NO,
-               KC_NO,   KC_NO,       KC_NO,    KC_NO,
+        XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,  XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,  XXXXXXX, XXXXXXX,
+        XXXXXXX, KC_LCMD, KC_LOPT,     KC_LSFT,  KC_LCTL, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,     TO(_RGX), XXXXXXX, XXXXXXX,
+                 XXXXXXX, XXXXXXX,     XXXXXXX,  XXXXXXX,
                         /* thumb cluster */
-                           _______, _______,
-                                    _______,
-                  _______, _______, _______,
+                           XXXXXXX, XXXXXXX,
+                                    XXXXXXX,
+                  XXXXXXX, XXXXXXX, XXXXXXX,
 
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-        KC_PLUS, KC_AMPR, KC_ASTR, KC_DOT,  KC_EQL,  KC_NO,
-        KC_PIPE, KC_SLSH, KC_EXLM, KC_QUES, KC_NO,   KC_NO,
-        KC_AT,   KC_PERC, KC_LT,   KC_GT,   KC_BSLS, KC_NO,
-               KC_NO,   KC_NO,   KC_NO,   KC_NO,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_PLUS, KC_AMPR, KC_ASTR, KC_DOT,  KC_EQL,  XXXXXXX,
+        KC_PIPE, KC_SLSH, KC_EXLM, KC_QUES, XXXXXXX, XXXXXXX,
+        KC_AT,   KC_PERC, KC_LT,   KC_GT,   KC_BSLS, XXXXXXX,
+                 XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
                         /* thumb cluster */
-                           _______, _______,
-                                    _______,
-                  _______, _______, _______
+                           XXXXXXX, XXXXXXX,
+                                    XXXXXXX,
+                  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 [_COMMANDS] = LAYOUT(
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, CLIPSC, PRNTSC,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO,
-               KC_NO, KC_NO, KC_NO, KC_NO,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CLIPSC,  PRNTSC,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                         /* thumb cluster */
-                         KC_NO, KC_NO,
-                                KC_NO,
-                  KC_NO, KC_NO, KC_NO,
+                         XXXXXXX, XXXXXXX,
+                                  XXXXXXX,
+                XXXXXXX, XXXXXXX, XXXXXXX,
 
-        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, TMX_PRVW, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO,
-               KC_NO, KC_NO,    KC_NO, RESET,
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, TMX_PRVW, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+                 XXXXXXX, XXXXXXX,  XXXXXXX, RESET,
                         /* thumb cluster */
-                       KC_NO, KC_NO,
-                              KC_NO,
-                KC_NO, KC_NO, KC_NO
+                         XXXXXXX, XXXXXXX,
+                                  XXXXXXX,
+                XXXXXXX, XXXXXXX, KC_NO
 ),
-
-[_KEYPAD] = LAYOUT(
-        KC_NO, KC_NO,   KC_NO,   KC_NO,    KC_NO,     KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO,   KC_NO,   KC_NO,    KC_NO,     KC_NO,
-        KC_NO, KC_NO,   SW_WIN,  KC_NO,    KC_NO,     KC_NO,
-        KC_NO, OS_SHFT, OS_ALT,  OS_CTRL,  OS_CMD,   KC_NO,
-        KC_NO, KC_NO,   KC_NO,   TO(_RGX), TO(_SYM2), KC_NO,
-                 KC_NO, KC_NO,   KC_NO,    KC_NO,
-                        /* thumb cluster */
-                        _______, _______,
-                                 _______,
-               _______, _______, _______,
-
-           // Right Hand
-        _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, KC_PEQL, KC_PSLS, KC_PAST, _______,
-        _______, KC_7,    KC_8,    KC_9,   KC_PMNS, _______,
-        _______, KC_4,    KC_5,    KC_6,   KC_PPLS, _______,
-        _______, KC_1,    KC_2,    KC_3,   KC_PENT, _______,
-                 _______, _______, KC_PDOT, KC_PENT,
-                        /* thumb cluster */
-                        _______, _______,
-                                 _______,
-               _______, _______, KC_0
-)
 };
 
 void register_unshifted_kc(uint16_t keycode, bool lsft_pressed, bool rsft_pressed) {
@@ -394,11 +414,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case L_NUM:
         if (record->event.pressed) {
             key_timer = timer_read();
-            layer_on(_KEYPAD);
+            /* layer_on(_KEYPAD); */
+            layer_on(_RNUM);
         } else {
-            layer_off(_KEYPAD);
-            layer_off(_RGX);
-            layer_off(_SYM2);
+            layer_off(_RNUM);
+            /* layer_off(_KEYPAD); */
+            /* layer_off(_RGX); */
+            /* layer_off(_SYM2); */
         }
         return false;
         break;
@@ -431,6 +453,11 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     }
 }
 
+void double_tap(uint16_t keycode) {
+    tap_code16(keycode);
+    tap_code16(keycode);
+}
+
 void triple_tap(uint16_t keycode) {
     tap_code16(keycode);
     tap_code16(keycode);
@@ -447,6 +474,16 @@ bool tap_hold(uint16_t keycode) {
         case KC_QUOT:
         case KC_DQUO:
         case KC_GRV:
+        case KC_1:
+        case KC_2:
+        case KC_3:
+        case KC_4:
+        case KC_5:
+        case KC_6:
+        case KC_7:
+        case KC_8:
+        case KC_9:
+        case KC_0:
             return true;
         default:
             return false;
@@ -459,6 +496,19 @@ void tap_hold_send_hold(uint16_t keycode) {
         case KC_DQUO:
         case KC_GRV:
             triple_tap(keycode);
+            return;
+        case KC_1:
+        case KC_2:
+        case KC_3:
+        case KC_4:
+        case KC_5:
+        case KC_6:
+        case KC_7:
+        case KC_8:
+        case KC_9:
+        case KC_0:
+            // send symbols when numbers are held
+            tap_code16(S(keycode));
             return;
     }
 }

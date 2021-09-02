@@ -8,6 +8,8 @@ enum layers {
     _SFT,
     _CBASE,
     _QWERTY,
+    _LRGX,
+    _RNUM,
     _RGX,
     _SYM,
     _COMMANDS,
@@ -33,3 +35,4 @@ enum custom_keycodes {
 #define PRNTSC G(S(KC_4))           // Cmd-Shift-4 -> macOS Screenshot
 #define C_ESC CTL_T(KC_ESC)        // control when held, escape when tapped
 #define _CMDS OSL(_COMMANDS)
+#define TPFX C(KC_SPC)              // tmux prefix
