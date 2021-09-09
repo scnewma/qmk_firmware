@@ -21,9 +21,6 @@ enum layers {
 
 enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
-    L_NUM,
-    L_CMD,
-    L_SYM,
 
     // swapper keycodes
     SW_WIN, // (cmd-tab)
@@ -39,6 +36,7 @@ enum custom_keycodes {
     P_RALG, // =>
     P_DCLN, // ::
     P_HBNG, // #!
+    P_PEQL, // +=
 };
 
 #define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
@@ -46,3 +44,8 @@ enum custom_keycodes {
 #define C_ESC CTL_T(KC_ESC)        // control when held, escape when tapped
 #define _CMDS OSL(_COMMANDS)
 #define TPFX C(KC_SPC)              // tmux prefix
+#define LA_CMD LT(_CMD, KC_TAB)
+#define LA_SFT LT(_SFT, KC_ESC)
+#define LA_SYM MO(_RSYM)
+#define LA_NUM LT(_RNUM, KC_ENTER)
+#define ALFRED G(KC_SPC)
