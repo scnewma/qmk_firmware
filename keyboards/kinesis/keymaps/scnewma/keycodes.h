@@ -10,6 +10,7 @@ enum layers {
     _QWERTY,
     _LRGX,
     _RNUM,
+    _RSYM,
     _RGX,
     _SYM,
     _CMD,
@@ -22,6 +23,7 @@ enum custom_keycodes {
     TMX_PRVW = SAFE_RANGE,
     L_NUM,
     L_CMD,
+    L_SYM,
 
     // swapper keycodes
     SW_WIN, // (cmd-tab)
@@ -31,6 +33,12 @@ enum custom_keycodes {
     OS_CTRL,
     OS_ALT,
     OS_CMD,
+
+    // programming common symbol string
+    P_RASM, // ->
+    P_RALG, // =>
+    P_DCLN, // ::
+    P_HBNG, // #!
 };
 
 #define CLIPSC G(S(C(KC_4)))        // Cmd-Shift-Ctrl-4 -> macOS Screenshot (clipboard)
