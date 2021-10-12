@@ -397,7 +397,7 @@ void tap_hold_send_tap(uint16_t keycode) {
 }
 
 uint16_t tap_hold_timeout(uint16_t keycode) {
-    return 150;
+    return 175;
 }
 
 void matrix_scan_user(void) {
