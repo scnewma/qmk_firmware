@@ -18,6 +18,4 @@ SLEEP_LED_ENABLE = no       # Breathing sleep LED during USB suspend
 
 COMBO_ENABLE = no
 
-SRC += oneshot.c
 SRC += tap_hold.c
-SRC += swapper.c
