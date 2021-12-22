@@ -5,42 +5,6 @@
 #include "swapper.h"
 #include "tap_hold.h"
 
-enum combo_events {
-    CTL_U_COMBO,
-    CTL_D_COMBO,
-    CTL_Z_COMBO,
-};
-
-const uint16_t PROGMEM ctl_u_combo[] = {KC_UNDS, KC_J, COMBO_END};
-const uint16_t PROGMEM ctl_d_combo[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM ctl_z_combo[] = {KC_K, KC_X, COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-    [CTL_U_COMBO] = COMBO_ACTION(ctl_u_combo),
-    [CTL_D_COMBO] = COMBO_ACTION(ctl_d_combo),
-    [CTL_Z_COMBO] = COMBO_ACTION(ctl_z_combo),
-};
-
-void process_combo_event(uint16_t combo_index, bool pressed) {
-    switch (combo_index) {
-        case CTL_U_COMBO:
-            if (pressed) {
-                tap_code16(C(KC_U));
-            }
-            break;
-        case CTL_D_COMBO:
-            if (pressed) {
-                tap_code16(C(KC_D));
-            }
-            break;
-        case CTL_Z_COMBO:
-            if (pressed) {
-                tap_code16(C(KC_Z));
-            }
-            break;
-    }
-}
-
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 #define LAYOUT_kinesis_base( \
         K02, K03, K04, K05, K06,                    K07, K08, K09, K10, K11, \
@@ -49,21 +13,21 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                        K43, K44, K45,          K46, K47, K48 \
     ) \
     LAYOUT_wrapper( \
-        KC_ESC,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_F6, KC_F7, KC_F8, \
-        XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-        ALFRED,   K02,     K03,     K04,     K05,     K06, \
-        XXXXXXX,  K14,     K15,     K16,     K17,     K18, \
-        XXXXXXX,  K26,     K27,     K28,     K29,     K30, \
+        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_F6, KC_F7, KC_F8, \
+        XXXXXXX, KC_PLUS, KC_LBRC, KC_LCBR, KC_LPRN, KC_AMPR, \
+        ALFRED,  K02,     K03,     K04,     K05,     K06, \
+        TPFX,    K14,     K15,     K16,     K17,     K18, \
+        KC_COLN, K26,     K27,     K28,     K29,     K30, \
                  _______, _______, KC_LEFT, KC_RGHT, \
                                                        K45, OSL(_COMMANDS), \
-                                                            XXXXXXX, \
-                                                  K43, K44, XXXXXXX, \
-        KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_PSCR,  KC_SLCK, DF(_BASE), DF(_BASE2), DF(_QWERTY), \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  \
-        K07,     K08,    K09,      K10,     K11,     XXXXXXX,  \
-        K19,     K20,    K21,      K22,     K23,     XXXXXXX,  \
-        K31,     K32,    K33,      K34,     K35,     XXXXXXX,  \
-                 KC_UP,  KC_DOWN,  _______, _______, \
+                                                            KC_LCMD, \
+                                                  K43, K44, KC_RCTL, \
+        KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_SLCK, DF(_BASE), DF(_BASE2), DF(_QWERTY), \
+        KC_EQL, KC_RPRN, KC_RCBR, KC_RBRC, KC_ASTR, XXXXXXX,  \
+        K07,    K08,     K09,     K10,     K11,     KC_MINS,  \
+        K19,    K20,     K21,     K22,     K23,     KC_UNDS,  \
+        K31,    K32,     K33,     K34,     K35,     KC_SCLN,  \
+                KC_UP,   KC_DOWN, _______, _______, \
                                                     XXXXXXX, K46, \
                                                              XXXXXXX, \
                                                XXXXXXX, K47, K48 \
