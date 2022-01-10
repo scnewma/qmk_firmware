@@ -1,7 +1,5 @@
 #include QMK_KEYBOARD_H
 
-#include "tap_hold.h"
-
 enum layers {
     _BASE = 0,
     _SFT,
@@ -131,75 +129,3 @@ bool process_record_user_shifted_keycode(uint16_t keycode, uint16_t shifted_keyc
     return true;
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_tap_hold(keycode, record)) {
-        return false;
-    }
-
-    return true;
-}
-
-void double_tap(uint16_t keycode) {
-    tap_code16(keycode);
-    tap_code16(keycode);
-}
-
-void triple_tap(uint16_t keycode) {
-    tap_code16(keycode);
-    tap_code16(keycode);
-    tap_code16(keycode);
-}
-
-void tap16_repeatable(uint16_t keycode) {
-    tap_code16(keycode);
-    /* register_key_to_repeat(keycode); */
-}
-
-bool tap_hold(uint16_t keycode) {
-    switch (keycode) {
-        case KC_DQUO:
-        case KC_QUOT:
-        case KC_EQL:
-        case KC_MINS:
-            return true;
-        default:
-            return false;
-    }
-}
-
-void tap_hold_send_hold(uint16_t keycode) {
-    switch (keycode) {
-        case KC_DQUO:
-            tap_code16(KC_QUOT);
-            return;
-        case KC_QUOT:
-            // send shifted symbols when held
-            tap_code16(S(keycode));
-            return;
-        // =>
-        case KC_EQL:
-            tap_code16(KC_EQL);
-            tap_code16(KC_GT);
-            return;
-        // ->
-        case KC_MINS:
-            tap_code16(KC_MINS);
-            tap_code16(KC_GT);
-            return;
-    }
-}
-
-void tap_hold_send_tap(uint16_t keycode) {
-    switch (keycode) {
-        default:
-            tap16_repeatable(keycode);
-    }
-}
-
-uint16_t tap_hold_timeout(uint16_t keycode) {
-    return 175;
-}
-
-void matrix_scan_user(void) {
-    tap_hold_matrix_scan();
-}
